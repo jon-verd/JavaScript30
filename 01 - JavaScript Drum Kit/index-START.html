@@ -59,6 +59,29 @@
 
 <script>
 
+
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
+    if (!audio) return; // This stops the function from running if a key not associated with an instrument is pressed.
+    audio.currentTime = 0; // This resets the timer on the audio file so that keys can be played in quick succession.
+    audio.play();
+    key.classList.add('playing')
+  }
+
+  function removeTransition(e) {
+    if(e.propertyName !== 'transform') return; // This makes it so that the removeTransition function only applies to the transform property
+    this.classList.remove('playing'); // this removes playing from "key". "this" refers to whatever is called agaisnt removeTransition, in this case "key".
+
+  }
+
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+  window.addEventListener('keydown', playSound); // on keydown this function runs the playSound function
+
+  // I initially cloned the original Javascript 30 Repo instead of forking the repo. This made it so that I could not commit my work. I moved my work over to this repo and am going to commit again. #rookieMistake
+
 </script>
 
 
